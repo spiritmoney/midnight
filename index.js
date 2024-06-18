@@ -57,9 +57,21 @@ function scheduleTask() {
     .then((result) => console.log(result))
     .catch((error) => console.error("Error:", error));
 }
-const midnightUtc = new Date();
-midnightUtc.setUTCHours(0, 0, 0, 0); // Set the time to midnight UTC
-setInterval(scheduleTask, midnightUtc); // Call scheduleTask every 1 minute (60 * 1000 milliseconds)
+
+// Use setInterval to call scheduleTask every day at midnight UTC
+const scheduleAtMidnightUTC = () => {
+  const now = new Date();
+  // Calculate the time until midnight UTC
+  const timeToMidnightUTC = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1) - now;
+  // First call to scheduleTask at midnight UTC
+  setTimeout(() => {
+    scheduleTask();
+    // After the first call, set an interval to call scheduleTask every 24 hours
+    setInterval(scheduleTask, 24 * 60 * 60 * 1000);
+  }, timeToMidnightUTC);
+};
+
+scheduleAtMidnightUTC();
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
