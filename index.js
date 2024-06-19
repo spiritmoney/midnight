@@ -61,9 +61,11 @@ function scheduleTask() {
 // Use setInterval to call scheduleTask every day at midnight UTC
 const scheduleAtMidnightUTC = () => {
   const now = new Date();
-  // Calculate the time until midnight UTC
-  const timeToMidnightUTC = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1) - now;
-  // First call to scheduleTask at midnight UTC
+  const nextMidnight = new Date(now);
+  nextMidnight.setUTCHours(24, 0, 0, 0);
+
+  const timeToMidnightUTC = nextMidnight - now;
+
   setTimeout(() => {
     scheduleTask();
     // After the first call, set an interval to call scheduleTask every 24 hours
